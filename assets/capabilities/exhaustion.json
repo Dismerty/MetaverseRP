@@ -1,0 +1,9 @@
+{
+    "ID": "absorption",
+    "Name": "Поглощение маны",
+    "Available": 
+    {
+        "Level": 1
+    },
+    "Mana": 0
+}

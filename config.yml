@@ -1,0 +1,22 @@
+# Конфигурация бота
+
+# Основные настройки бота 
+Settings:
+  Token: 0000000000:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  # Для работы LocalServer требуется скомпилированный сервер Telegram-Bot-API
+  LocalServer: http://localhost:8081
+  Company: Dim232
+  Game: MetaverseRP
+  Internet: True
+  Logging: False
+
+# Настройки консоли
+Console:
+  Backlight: True
+
+# Настройки аккаунта
+Account:
+  # Автоматический заход в аккаунт
+  AutoLogin:
+    TelegramID: Null
+    Username: Null

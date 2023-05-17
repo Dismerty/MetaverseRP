@@ -218,7 +218,7 @@ class GameAssets:
     От имени персонажа до слотов его инвентаря.
     """
     
-    def readLocation(message):
+    def readLocation(message: types.Message):
         """Получает информацию о локации на которой находится игрок.
 
         Аргументы:

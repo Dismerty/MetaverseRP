@@ -216,9 +216,6 @@ async def end(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
 
         if 'Подтвердить' in message.text:
-            if os.path.exists('data/profiles/') == False:
-                os.mkdir('data/profiles/')
-
             player = variables.get("player")
             player['name'] = data['name']
             player['real_name'] = data['name']
@@ -229,6 +226,8 @@ async def end(message: types.Message, state: FSMContext):
             player['character'] = data['character']
             player['diet'] = data['diet']
             player['story'] = data['story']
+            player['level'] = 1
+            player['experience'] = 0
             Connect.addPlayer(message, Data = player, Table = 'CreatedPlayers')
 
             await message.answer(msg.set('Персонаж успешно создан, ожидает проверки администрации.', 'Создание игрового персонажа'), reply_markup = ReplyKeyboardRemove())

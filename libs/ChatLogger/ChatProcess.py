@@ -49,7 +49,7 @@ class ChatLogger(StatesGroup):
     async def ChatScanner(message: dict, Data) -> None:
         pass
 
-    async def log(TelegramData: dict, Data: dict):
+    async def log(TelegramData: types.Message, data: dict):
         """Функция `log()` выводит в консоль сообщение отправленное игроком в чат.
 
         Аргументы:
@@ -58,10 +58,10 @@ class ChatLogger(StatesGroup):
         """
         UserID = Database.UserID(TelegramData)
         if len(TelegramData.text.split("\n")) == 1:
-            Console.log(f'{colors.gray}({colors.green}{TelegramData.from_user.id}/{UserID}{colors.gray}){colors.green} {Data["name"]} - {Data["level"]} уровень > {TelegramData.text}', f'Chat/{GameAssets.readLocation(TelegramData)["Name"]}', custom = True)
+            Console.log(f"{colors.gray}({colors.green}{TelegramData.from_user.id}/{UserID}{colors.gray}){colors.green} {data['name']} - {'∞' if data['level'] >= 1000000 else data['level']} уровень > {TelegramData.text}", f"Chat/{GameAssets.readLocation(TelegramData)['Name']}", custom = True)
         else:
             msg = TelegramData.text.split("\n")
-            Console.log(f'{colors.gray}({colors.green}{TelegramData.from_user.id}/{UserID}{colors.gray}){colors.green} {Data["name"]} - {Data["level"]} уровень:', f'Chat/{GameAssets.readLocation(TelegramData)["Name"]}', custom = True)
+            Console.log(f"{colors.gray}({colors.green}{TelegramData.from_user.id}/{UserID}{colors.gray}){colors.green} {data['name']} - {'∞' if data['level'] >= 1000000 else data['level']} уровень:", f"Chat/{GameAssets.readLocation(TelegramData)['Name']}", custom = True)
             for msg in msg:
                 Console.log(f'{colors.gray}({colors.green}{TelegramData.from_user.id}/{UserID}{colors.gray}){colors.green}  {msg}', f'Chat/{GameAssets.readLocation(TelegramData)["Name"]}', custom = True)
 

@@ -1,9 +1,9 @@
 from dispatcher import dp
 from configuration import config
 
-from libs.ChatLogger import ChatLogger
+from libs.ChatLogger import ChatLogger, ChatScanner
 from libs.GameAssets import GameAssets, Player, Location
-from libs import msg
+from libs import Console, msg
 from aiogram import types
 
 # Обработкичик на проверку создание аккаунтов и игрового персонажа
@@ -25,4 +25,22 @@ async def chat(message: types.Message):
 # Обработчик игрового чата
 @dp.message_handler(state = ChatLogger.GameChatState)
 async def GameChat(message: types.Message):
-    await ChatLogger.sendMessageRP(message, Player.TelegramID(message).data)
+
+    if message.text.startswith('/'):
+        await message.answer(msg.set("Неизвестная команда!"))
+
+    actions = await ChatLogger.sendMessageRP(message, Player.TelegramID(message).data)
+
+    for action in actions:
+
+        if not isinstance(action, dict):
+            args = action.split(' ')
+
+            if action.startswith('move') and len(args) == 2:
+
+                if Player.TelegramID(message).move(args[1]):
+                    player = Player.TelegramID(message)
+                    location = Location(player.location())
+                    await message.answer(msg.set(f"Вы переместились на локацию “{location.name}”."))
+
+

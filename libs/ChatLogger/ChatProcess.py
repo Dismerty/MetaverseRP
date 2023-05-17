@@ -5,6 +5,7 @@ from dispatcher import bot
 
 from libs.ConnectID import Database
 from libs.GameAssets import GameAssets
+from .ChatScanner import ChatScanner
 from libs import Console, msg, colors
 
 import yaml
@@ -16,7 +17,7 @@ from aiogram import types
 with open('config.yml', 'r') as file:
     config = yaml.safe_load(file)
 
-company = config['Settings']['Game']
+'''company = config['Settings']['Game']
 ability = ['регенерация', 'регенерацию']
 
 class ChatScanner():
@@ -39,15 +40,12 @@ class ChatScanner():
         for d in actions:
             edit = edit.replace(f'{d[0]}[{d[1]}]', f'{d[0]}', 1)
             d[0] = d[0].lower()
-        return [edit, actions]
+        return [edit, actions]'''
 
 class ChatLogger(StatesGroup):
     # Состояние чата, игрок находясь в состоянии чата может писать сообщения другим игрокам, а
     # также выполнять команды разрешённые в чате.
     GameChatState = State()
-
-    async def ChatScanner(message: dict, Data) -> None:
-        pass
 
     async def log(TelegramData: types.Message, data: dict):
         """Функция `log()` выводит в консоль сообщение отправленное игроком в чат.
@@ -75,7 +73,11 @@ class ChatLogger(StatesGroup):
                     await bot.send_message(TelegramID, msg.set(text), parse_mode = types.ParseMode.HTML)
     
 
-    async def sendMessageRP(TelegramMessage: types.Message, data: dict, text = None, NotSendMessage: list = []):
+    async def sendMessageRP(TelegramMessage: types.Message,
+                            data: dict,
+                            text = None,
+                            NotSendMessage: list = [],
+                            Scanner = True) -> Union[list, None]:
         """Функция `sendMessageRP()` отправляет сообщение всем игрокам на локации.
 
         Аргументы:
@@ -83,14 +85,20 @@ class ChatLogger(StatesGroup):
             data (dict): Значение с данными игрока.
             text (_type_, optional): Текст, который будет отправлен игрокам. Значение по умолчанию None.
         """
+        if Scanner:
+            scan = ChatScanner(TelegramMessage)
+
         await ChatLogger.log(TelegramMessage, data)
         UserID = Database.UserID(TelegramMessage)
 
-        if text == None: text = TelegramMessage.text
+        if text == None and not Scanner: text = TelegramMessage.text
+        elif Scanner: text = scan.EditedMessage
         for TelegramID in GameAssets.checkPlayersLocation(GameAssets.readLocation(TelegramMessage)['ID']):
 
-            if TelegramID != TelegramMessage.from_user.id and TelegramID not in NotSendMessage:
+            if TelegramID != TelegramMessage.from_user.id and TelegramID not in NotSendMessage and text != '':
                 await bot.send_message(TelegramID, f"<b>{UserID}. {data['name']} - {'∞' if data['level'] >= 1000000 else data['level']} уровень</b>\n{text}")
+        
+        if Scanner: return scan.Actions
     
     async def sendMessageNonRP(TelegramData: dict, Data: dict, text = None):
         """Функция `sendMessageNonRP()` отправляет сообщение в НонРП чат всем игрокам на локации.
@@ -155,13 +163,6 @@ async def GameChat(message: types.Message):
 
         message.text = attack[0]
         await ChatLogger.sendMessageRP(message, Data, NotSendMessage = [TelegramID])
-        return
-
-    elif '/locations' in args[0] or '.дщсфешщты' in args[0]:
-        locations = []
-        for value in GameAssets.listLocations():
-            locations.append(value)
-            pass
         return
 
     elif ChatScanner.Attack(message)[1] == [] and message.text.find('[') != -1 and message.text.find(']') != -1 and message.text.find('[') < message.text.find(']'):

@@ -50,11 +50,15 @@ class Player:
                 TelegramID (int, optional): Можно передать как и всё сообщение, так и чисто TelegramID. Значение по умолчанию None.
                 UserID (int, optional): ID игрового аккаунта. Значение по умолчанию None.
             """
+            sql.execute(f"SELECT LocationID FROM listLocations WHERE LocationID = '{LocationID}'")
+            if sql.fetchone() is None: return False
+
             sql.execute(f"DELETE FROM Locations WHERE UserID = '{self.UserID}'")
             sql.execute(f"SELECT LocationID FROM Locations WHERE UserID = {self.UserID}")
             if sql.fetchone() is None:
                 sql.execute(f"INSERT INTO locations VALUES (?, ?)", (self.UserID, LocationID))
                 db.commit()
+                return True
         
         def location(self) -> str:
             sql.execute(f"SELECT LocationID FROM Locations WHERE UserID = {self.UserID}")
@@ -109,11 +113,15 @@ class Player:
                 TelegramID (int, optional): Можно передать как и всё сообщение, так и чисто TelegramID. Значение по умолчанию None.
                 UserID (int, optional): ID игрового аккаунта. Значение по умолчанию None.
             """
+            sql.execute(f"SELECT LocationID FROM listLocations WHERE LocationID = '{LocationID}'")
+            if sql.fetchone() is None: return False
+
             sql.execute(f"DELETE FROM Locations WHERE UserID = '{self.UserID}'")
             sql.execute(f"SELECT LocationID FROM Locations WHERE UserID = {self.UserID}")
             if sql.fetchone() is None:
                 sql.execute(f"INSERT INTO locations VALUES (?, ?)", (self.UserID, LocationID))
                 db.commit()
+                return True
 
         def location(self) -> str:
             sql.execute(f"SELECT LocationID FROM Locations WHERE UserID = {self.UserID}")
@@ -170,7 +178,7 @@ class Location():
         self.id = self.data['ID']
         self.name = self.data['Name']
         self.description = self.data['Description']
-        self.capabilities = self.data['Capabilities']
+        #self.capabilities = self.data['Capabilities']
 
     def load() -> None:
         """Функция `load()` полностью считывает файлы локаций и загружает в игру.

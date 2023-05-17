@@ -1,4 +1,4 @@
-from dispatcher import dp, bot
+from dispatcher import dp
 
 from libs import msg
 from aiogram import types

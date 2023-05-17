@@ -3,6 +3,7 @@ from . import info
 from . import kick
 from . import nonrp
 from . import location
+from . import locations
 
 # GameChat импортируется в последнюю очередь,
 # чтобы команды до GameChat регестрировались раньше

@@ -1,5 +1,5 @@
 
-from libs import GameAssets, Console, Connect
+from libs import Console, Connect
 import asyncio
 
 class EffectsList():

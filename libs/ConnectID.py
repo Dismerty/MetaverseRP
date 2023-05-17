@@ -2,7 +2,7 @@
 * ConnectID - библиотека для работы с файлами сохранения
 """
 
-import os, sqlite3, hashlib, configparser, variables, json
+import os, sqlite3, hashlib, variables, json, math
 from typing import Union
 from math import inf
 from libs.ConsoleLib import Console
@@ -422,8 +422,8 @@ if sql.fetchone() is None:
     Universe['character'] = 'Неизвестно'
     Universe['diet'] = 'Неизвестно'
     Universe['story'] = 'Неизвестно'
-    Universe['level'] = '???'
-    Universe['experience'] = '???'
+    Universe['level'] = 1000000
+    Universe['experience'] = 1000000000
     db = sqlite3.connect('data/ConnectID.db')
     sql = db.cursor()
 

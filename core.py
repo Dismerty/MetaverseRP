@@ -48,10 +48,6 @@ Console.log('Загрузка локаций...')
 Location.load()
 Console.log('Локации успешно загружены!')
 
-from libs.ChatLogger import ChatLogger
-dp.register_message_handler(ChatLogger.GameChat, state = ChatLogger.GameChatState)
-Console.log('Игровой чат загружен!')
-
 async def Startup(dp):
     TelegramID = Database.TelegramID(0)
     await commands.CommandInfo.setDescriptionCommands(bot)

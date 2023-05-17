@@ -4,7 +4,7 @@
 from dispatcher import bot
 
 from libs.ConnectID import Database
-from libs.GameAssets import GameAssets, Player
+from libs.GameAssets import GameAssets
 from libs import Console, msg, colors
 
 import yaml
@@ -46,9 +46,6 @@ class ChatLogger(StatesGroup):
     # также выполнять команды разрешённые в чате.
     GameChatState = State()
 
-    async def GameChat(message: types.Message):
-        await ChatLogger.sendMessageRP(message, Player.TelegramID(message).data)
-
     async def ChatScanner(message: dict, Data) -> None:
         pass
 
@@ -78,7 +75,7 @@ class ChatLogger(StatesGroup):
                     await bot.send_message(TelegramID, msg.set(text), parse_mode = types.ParseMode.HTML)
     
 
-    async def sendMessageRP(TelegramData: dict, Data: dict, text = None, NotSendMessage: list = []):
+    async def sendMessageRP(TelegramMessage: types.Message, data: dict, text = None, NotSendMessage: list = []):
         """Функция `sendMessageRP()` отправляет сообщение всем игрокам на локации.
 
         Аргументы:
@@ -86,14 +83,14 @@ class ChatLogger(StatesGroup):
             data (dict): Значение с данными игрока.
             text (_type_, optional): Текст, который будет отправлен игрокам. Значение по умолчанию None.
         """
-        await ChatLogger.log(TelegramData, Data)
-        UserID = Database.UserID(TelegramData)
+        await ChatLogger.log(TelegramMessage, data)
+        UserID = Database.UserID(TelegramMessage)
 
-        if text == None: text = TelegramData.text
-        for TelegramID in GameAssets.checkPlayersLocation(GameAssets.readLocation(TelegramData)['ID']):
+        if text == None: text = TelegramMessage.text
+        for TelegramID in GameAssets.checkPlayersLocation(GameAssets.readLocation(TelegramMessage)['ID']):
 
-            if TelegramID != TelegramData.from_user.id and TelegramID not in NotSendMessage:
-                await bot.send_message(TelegramID, f'<b>{UserID}. {Data["name"]} - {Data["level"]} уровень</b>\n{text}', parse_mode = types.ParseMode.HTML)
+            if TelegramID != TelegramMessage.from_user.id and TelegramID not in NotSendMessage:
+                await bot.send_message(TelegramID, f"<b>{UserID}. {data['name']} - {'∞' if data['level'] >= 1000000 else data['level']} уровень</b>\n{text}")
     
     async def sendMessageNonRP(TelegramData: dict, Data: dict, text = None):
         """Функция `sendMessageNonRP()` отправляет сообщение в НонРП чат всем игрокам на локации.

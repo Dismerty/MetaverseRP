@@ -117,7 +117,7 @@ class Player:
 
         def location(self) -> str:
             sql.execute(f"SELECT LocationID FROM Locations WHERE UserID = {self.UserID}")
-            return sql.fetchone()
+            return sql.fetchone()[0]
 
         def kick(self) -> bool:
             """Убирает игрока с локации.
@@ -161,9 +161,9 @@ class satiety:
 class Location():
 
     def __init__(self, LocationID: str) -> None:
-
-        self.LocationID = LocationID
         
+        self.LocationID = LocationID
+
         for value in sql.execute(f"SELECT Data FROM listLocations WHERE LocationID = '{self.LocationID}'"):
             self.data = json.loads(value[0])
 

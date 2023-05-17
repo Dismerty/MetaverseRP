@@ -58,7 +58,7 @@ class Player:
         
         def location(self) -> str:
             sql.execute(f"SELECT LocationID FROM Locations WHERE UserID = {self.UserID}")
-            return sql.fetchone()
+            return sql.fetchone()[0]
 
         def kick(self) -> bool:
             """Убирает игрока с локации.

@@ -38,7 +38,7 @@ async def info(message: types.Message):
 Краткая история: <i>{player.story}</i>
 
 <b>Дополнительная информация</b>
-Уровень: {player.level} ({player.experience} xp)
+Уровень/Опыт: {'∞' if player.level >= 1000000 else player.level}/{'∞' if player.experience >= 1000000000 else player.experience}
 Здоровье: {player.health.value}/{player.health.max} единиц.
 
 <b>Техническая информация</b>
@@ -61,7 +61,7 @@ UserID: {player.UserID}
 Краткая история: <i>{player.story}</i>
 
 <b>Дополнительная информация</b>
-Уровень: {player.level} ({player.experience} xp)
+Уровень/Опыт: {'∞' if player.level >= 1000000 else player.level}/{'∞' if player.experience >= 1000000000 else player.experience}
 Здоровье: {player.health.value}/{player.health.max} единиц.
 """
     

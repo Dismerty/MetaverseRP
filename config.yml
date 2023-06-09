@@ -2,10 +2,10 @@
 
 # Основные настройки бота 
 Settings:
-  Token: Null
+  Token: 6152495930:AAH-p-D4MHWTcmAg9WDEUiEicQbJEHHcL9o
   # Для работы LocalServer требуется скомпилированный сервер Telegram-Bot-API
   LocalServer: http://localhost:8081
-  Company: Null
+  Company: Fruinity Project
   Game: MetaverseRPG
   Internet: True
   Logging: False
@@ -18,5 +18,5 @@ Console:
 Account:
   # Автоматический заход в аккаунт
   AutoLogin:
-    TelegramID: Null
-    Username: Null
+    TelegramID: 1116769538
+    Username: NekoNeto

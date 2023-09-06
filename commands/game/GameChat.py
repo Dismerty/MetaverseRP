@@ -28,6 +28,7 @@ async def GameChat(message: types.Message):
 
     if message.text.startswith('/'):
         await message.answer(msg.set("Неизвестная команда!"))
+        return
 
     actions = await ChatLogger.sendMessageRP(message, Player.TelegramID(message).data)
 

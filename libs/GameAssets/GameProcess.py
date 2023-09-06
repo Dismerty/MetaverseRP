@@ -17,7 +17,7 @@ class Player:
     class UserID:
 
         def __init__(self, UserID: int) -> None:
-            self.UserID: int = Database.UserID(UserID)
+            self.UserID: int = UserID
             self.TelegramID: int = Database.TelegramID(self.UserID)
 
             self.login: str = Database.search('TelegramID', self.TelegramID, 'Login')
@@ -190,7 +190,7 @@ class Location():
             sql.execute(f"INSERT INTO listLocations VALUES (?, json(?))", ('void', json.dumps({"ID":"void", "Name": "Пустота", "Spawn": True})))
 
         for file in os.listdir('assets/locations'):
-            with open(f'assets/locations/{file}') as f:
+            with open(f'assets/locations/{file}', encoding = 'UTF-8') as f:
                 Data = json.load(f)
                 
                 sql.execute(f"INSERT INTO listLocations VALUES (?, json(?))", (Data['ID'], json.dumps(Data)))

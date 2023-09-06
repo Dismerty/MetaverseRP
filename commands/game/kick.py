@@ -15,7 +15,7 @@ async def ChatCommandKick(message: types.Message, state: FSMContext):
     data = Connect.readPlayer(message)
 
     if len(args) == 1:
-        await message.answer(msg.set('Команда /kick (ID) [-account] [-s]\n\n* Аргументы:\naccount - Кикает игрока с аккаунта.\ns - Кикает игрока без оповещения других игроков.\n\n<i>Используйте, чтобы кикнуть игрока с игрового чата.</i>'))
+        await message.answer(msg.set('Команда /kick (ID) [-account] [-s]\n\n<b>Аргументы</b>\naccount - Исключает игрока с аккаунта.\ns - Исключает игрока без оповещения других игроков.\n\n<i>Используйте, чтобы исключить игрока с игрового чата.</i>'))
         return
 
     elif args[1].isdigit() is False:

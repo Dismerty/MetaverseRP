@@ -1,4 +1,5 @@
 from . import exit
+from . import help
 from . import info
 from . import kick
 from . import nonrp

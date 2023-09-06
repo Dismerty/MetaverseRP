@@ -178,7 +178,7 @@ class Location():
         self.id = self.data['ID']
         self.name = self.data['Name']
         self.description = self.data['Description']
-        #self.capabilities = self.data['Capabilities']
+        self.capabilities = self.data['Capabilities']
 
     def load() -> None:
         """Функция `load()` полностью считывает файлы локаций и загружает в игру.

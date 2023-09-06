@@ -19,10 +19,10 @@ async def ChatCommandInfo(message: types.Message):
 <b>Команды администрирования</b>
 /kick - Исключает игрока с игрового чата.
 
-<b>Обратная связь и чаты</b>
-@MetaverseRP - Беседа проекта
-@MetaverseRPAdmin - Администратор проекта
-@GamePythonDev - Второй администратор"""
+<b>Beta функции</b>
+[move 'название локации'] - Перемещение по локациям.
+/location - Информация о локации на которой находитесь.
+/locations - Список названий и ID локаций."""
 
     await message.answer(msg.set(help, 'Помощь и информация по командам'))
 

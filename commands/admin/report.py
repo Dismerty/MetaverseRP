@@ -84,7 +84,7 @@ async def reportPlayerCreate(message: types.Message, state: FSMContext):
         await message.answer(msg.set('Выберите способность, которую назначите этому персонажу.', 'Система репортов'), reply_markup = keyboard)
         await state.finish(); return
     elif message.text in 'Без способностей':
-        await message.answer(msg.set('Анкета успешно принята!\n\n<b>Данная функция будет удалена!</b>', 'Система репортов (Pre-Alpha Функции)'), reply_markup = ReplyKeyboardRemove())
+        await message.answer(msg.set('Анкета успешно принята!\n\n<b>Данная функция будет удалена!</b>', 'Система репортов (Beta функции)'), reply_markup = ReplyKeyboardRemove())
         async with state.proxy() as data:
             player = Connect.readPlayer(UserID = data['UserID'], Table = 'CreatedPlayers')
             Connect.addPlayer(UserID = data['UserID'], Data = player)

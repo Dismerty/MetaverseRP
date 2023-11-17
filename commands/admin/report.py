@@ -70,7 +70,7 @@ async def reportPlayerCreate(message: types.Message, state: FSMContext):
     keyboard.add('Отложить')
 
     data = Connect.readPlayer(UserID = message.text[15:], Table = 'CreatedPlayers')
-    await message.answer(msg.set(f"Данные о персонаже:\nИмя: {data['name']}\nПол: <i>{data['gender']}</i>\nВозраст: <i>{data['age']}</i>\nРаса: <i>{data['species']}</i>\nВнешность: <i>{data['appearance']}</i>\nХарактер: <i>{data['character']}</i>\nРацион питания: <i>{data['diet']}</i>\nИстория: <i>{data['story']}</i>\n\n<b>Примечание: Вы должны подобрать способности для этого персонажа.</b>", 'Система репортов'), reply_markup = keyboard)
+    await message.answer(msg.set(f"Данные о персонаже:\nИмя: <i>{data['name']}</i>\nПол: <i>{data['gender']}</i>\nВозраст: <i>{data['age']}</i>\nРаса: <i>{data['species']}</i>\nВнешность: <i>{data['appearance']}</i>\nХарактер: <i>{data['character']}</i>\nРацион питания: <i>{data['diet']}</i>\nИстория: <i>{data['story']}</i>\n\n<b>Примечание: Вы должны подобрать способности для этого персонажа.</b>", 'Система репортов'), reply_markup = keyboard)
     async with state.proxy() as data:
         data['UserID'] = message.text[15:]
     await ReportForm.Done.set()
